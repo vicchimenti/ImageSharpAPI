@@ -1,0 +1,61 @@
+@startuml processors
+
+IProcessorStrategy <|.. ClassicalProcessorStrategy
+IProcessorStrategy <|.. FunctionalProcessorStrategy
+ProcessorFactory --> IProcessorStrategy
+
+ClassicalProcessorStrategy --> OperationList
+ClassicalProcessorStrategy --> OperationParser
+ClassicalProcessorStrategy --> OperationProcessor
+
+FunctionalProcessorStrategy --> FunctionList
+FunctionalProcessorStrategy --> FunctionParser
+FunctionalProcessorStrategy --> FunctionProcessor
+
+FunctionProcessor --> FunctionList
+FunctionParser --> FunctionList
+
+OperationProcessor --> OperationList
+OperationParser --> OperationList
+
+class IProcessorStrategy {
+    + ProcessImage(operations : string, imageData : byte[], loggerFactory : ILoggerFactory) : byte[]
+}
+
+class ProcessorFactory {
+    +  GetProcessor(strategy : string) : IProcessorStrategy
+}
+
+class FunctionList {
+    + Functions: IEnumerable<Action<Image<Rgba32>, ILogger<Operation>>>
+    + NumberOfOperations: int
+    + Add(function: Action<Image<Rgba32>, ILogger<Operation>>)
+}
+
+class FunctionParser {
+    + FunctionParser(operations: string, loggerFactory: ILoggerFactory)
+    + Parse(): FunctionList
+}
+
+class FunctionProcessor {
+    + FunctionProcessor(functionsList : FunctionList, loggerFactory : ILoggerFactory) 
+    + Execute(sourceImage: byte[]) : byte[] 
+}
+
+class OperationList {
+    + Operations: IEnumerable<Operation>
+    + NumberOfOperations: int
+    + Add(operation: Operation)
+}
+
+class OperationParser {
+    + OperationParser(operations: string, loggerFactory: ILoggerFactory)
+    + Parse(): OperationList
+}
+
+class OperationProcessor {
+    + OperationProcessor(operationsList : OperationList, loggerFactory : ILoggerFactory) 
+    + Execute(sourceImage: byte[]) : byte[] 
+}
+
+@enduml
