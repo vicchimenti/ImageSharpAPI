@@ -22,7 +22,6 @@
     <ItemGroup>
       <Folder Include="out\operations" />
       <Folder Include="out\processors" />
-      <Folder Include="Processors\Classical\Operations" />
       <Folder Include="Processors\Functional" />
     </ItemGroup>
 
