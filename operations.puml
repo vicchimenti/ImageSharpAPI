@@ -1,0 +1,48 @@
+@startuml operations
+
+Operation <|.. FlipHorizontal
+Operation <|.. FlipVertical
+Operation <|.. Grayscale
+Operation <|.. Resize
+Operation <|.. Rotate
+Operation <|.. Left
+Operation <|.. Right
+Operation <|.. Thumbnail
+
+interface Operation {
+    + Run(image: Image<Rgba32>, logger: ILogger<Operation>) : void
+}
+
+class FlipHorizontal {
+    + FlipHorizontal(match: Match)
+}
+
+class FlipVertical {
+    + FlipVertical(match: Match)
+}
+
+class Grayscale {
+    + Grayscale(match: Match)
+}
+
+class Resize {
+    + Resize(match: Match)
+}
+
+class Rotate {
+    + Rotate(match: Match)
+}
+
+class Left {
+    + Left(match: Match)
+}
+
+class Right {
+    + Right(match: Match)
+}
+
+class Thumbnail {
+    + Thumbnail(match: Match)
+}
+
+@enduml
